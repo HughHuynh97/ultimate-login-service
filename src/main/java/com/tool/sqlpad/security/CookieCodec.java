@@ -128,7 +128,7 @@ public abstract class CookieCodec {
 
         @Override
         public StepLogin getStep() {
-            return StepLogin.login;
+            return StepLogin.LOGIN;
         }
     }
 
@@ -184,7 +184,7 @@ public abstract class CookieCodec {
 
         @Override
         public StepLogin getStep() {
-            return StepLogin.login;
+            return StepLogin.LOGIN;
         }
     }
 

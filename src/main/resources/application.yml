@@ -1,5 +1,10 @@
+spring:
+  application:
+    name: ultimate-login
 server:
+  servlet:
+    contextPath: /ultimate-login
   port: 6969
 sqlpad:
   user: hugh.huynh
-  password: Khoi28122008!!!!
+  password: Khoi28122008!!

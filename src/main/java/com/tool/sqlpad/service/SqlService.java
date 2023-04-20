@@ -1,7 +1,7 @@
 package com.tool.sqlpad.service;
 
-import com.tool.sqlpad.constant.Environment;
 import com.tool.sqlpad.model.Batch;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.tool.sqlpad.constant.Environment.MERITO_PROD;
+
 @Service
+@RequiredArgsConstructor
 public class SqlService {
 
     @Value("${sqlpad.user}")
@@ -23,23 +26,18 @@ public class SqlService {
     private String password;
     private final RestTemplate restTemplate;
     private final MapperService mapperService;
-
-    public SqlService(RestTemplate restTemplate, MapperService mapperService) {
-        this.restTemplate = restTemplate;
-        this.mapperService = mapperService;
-
-    }
-
     public String getCookie() {
-        var response = restTemplate.postForEntity("https://dbtool.beatus88.com/api/signin", Map.of("email", userName, "password", password), String.class);
+        var response = restTemplate.postForEntity("https://dbtool.beatus88.com/api/signin", Map.of(
+                "email", userName,
+                "password", password), String.class);
         return Objects.requireNonNull(response.getHeaders().get("Set-Cookie")).get(0);
     }
 
     public String query(String query) {
         var cookie = this.getCookie();
-        HttpHeaders headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.set("cookie", cookie);
-        var params = Map.of("batchText", query, "connectionId", Environment.MERITO_PROD);
+        var params = Map.of("batchText", query, "connectionId", MERITO_PROD);
         var entity = new HttpEntity<>(params, headers);
         var batch = restTemplate.postForEntity("https://dbtool.beatus88.com/api/batches", entity, Batch.class);
         var statement = Objects.requireNonNull(batch.getBody()).getStatements().get(0);

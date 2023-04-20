@@ -9,5 +9,5 @@ public enum StepLogin {
     /**
      * step login
      */
-    login
+    LOGIN
 }

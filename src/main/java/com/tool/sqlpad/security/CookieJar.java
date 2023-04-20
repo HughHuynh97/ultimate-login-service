@@ -3,8 +3,8 @@ package com.tool.sqlpad.security;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class CookieJar {
-
+public class CookieJar {
+    private CookieJar() {}
     public static void add(HttpServletResponse response, String name, String value) {
         add(response, name, value, true, null);
     }
