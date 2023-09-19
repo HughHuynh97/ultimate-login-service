@@ -1,0 +1,6 @@
+version: "3"
+services:
+  instant-1:
+    image: trivip002/ultimate-login-service:latest
+    ports:
+      - "6969:6969"
